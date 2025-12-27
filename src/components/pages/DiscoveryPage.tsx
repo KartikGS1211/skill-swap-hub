@@ -250,13 +250,10 @@ export default function DiscoveryPage() {
               </div>
 
               {filteredSkills.length > 0 ? (
-                <motion.div
-                  variants={containerVariants}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                >
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredSkills.slice(0, 6).map((skill, i) => (
-                    <Reveal key={skill._id} delay={i * 0.05}>
-                      <Link to={`/skills/${skill._id}`} className="group h-full">
+                    <Reveal key={skill._id} delay={i * 0.05} className="h-full">
+                      <Link to={`/skills/${skill._id}`} className="group h-full block">
                         <motion.div
                           whileHover={{ y: -8 }}
                           className="h-full bg-white border border-black/10 rounded-lg overflow-hidden hover:border-primary hover:shadow-[8px_8px_0px_0px_rgba(216,64,14,0.1)] transition-all duration-300"
@@ -323,7 +320,7 @@ export default function DiscoveryPage() {
                       </Link>
                     </Reveal>
                   ))}
-                </motion.div>
+                </div>
               ) : (
                 <div className="text-center py-12">
                   <p className="font-paragraph text-textprimary/60">No skills found matching your search</p>
