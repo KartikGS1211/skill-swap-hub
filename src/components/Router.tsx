@@ -6,14 +6,14 @@ import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
 
 // Pages
 import HomePage from '@/components/pages/HomePage';
+import OnboardingPage from '@/components/pages/OnboardingPage';
+import DiscoveryPage from '@/components/pages/DiscoveryPage';
 import UsersPage from '@/components/pages/UsersPage';
 import UserDetailPage from '@/components/pages/UserDetailPage';
 import SkillsPage from '@/components/pages/SkillsPage';
 import SkillDetailPage from '@/components/pages/SkillDetailPage';
 import MatchesPage from '@/components/pages/MatchesPage';
 import MatchDetailPage from '@/components/pages/MatchDetailPage';
-import LocationsPage from '@/components/pages/LocationsPage';
-import ContactPage from '@/components/pages/ContactPage';
 import ProfilePage from '@/components/pages/ProfilePage';
 
 // Layout component that includes ScrollToTop
@@ -35,6 +35,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />, // MIXED ROUTE: Shows different content for authenticated vs anonymous users
+      },
+      {
+        path: "onboarding",
+        element: <OnboardingPage />,
+      },
+      {
+        path: "discovery",
+        element: <DiscoveryPage />,
       },
       {
         path: "users",
@@ -59,14 +67,6 @@ const router = createBrowserRouter([
       {
         path: "matches/:id",
         element: <MatchDetailPage />,
-      },
-      {
-        path: "locations",
-        element: <LocationsPage />,
-      },
-      {
-        path: "contact",
-        element: <ContactPage />,
       },
       {
         path: "profile",

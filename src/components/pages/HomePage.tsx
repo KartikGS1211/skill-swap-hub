@@ -1,6 +1,6 @@
 // HPI 1.6-V
 import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -8,6 +8,7 @@ import { BaseCrudService } from '@/integrations';
 import { Skills, UserProfiles, AISkillMatches } from '@/entities';
 import { Image } from '@/components/ui/image';
 import { ArrowRight, Users, Sparkles, MapPin, MessageSquare, Terminal, Cpu, Globe, ArrowUpRight } from 'lucide-react';
+import { useMember } from '@/integrations';
 
 // --- Utility Components for Motion & Layout ---
 
@@ -70,10 +71,21 @@ const ParallaxText = ({ children, baseVelocity = 100 }: { children: React.ReactN
 // --- Main Component ---
 
 export default function HomePage() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useMember();
+  
   // --- Data Fidelity Protocol: Canonical Data Sources ---
   const [skills, setSkills] = useState<Skills[]>([]);
   const [users, setUsers] = useState<UserProfiles[]>([]);
   const [matches, setMatches] = useState<AISkillMatches[]>([]);
+
+  // Check onboarding status on mount
+  useEffect(() => {
+    const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+    if (!onboardingCompleted && isAuthenticated) {
+      navigate('/onboarding');
+    }
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -190,19 +202,19 @@ export default function HomePage() {
               className="flex flex-wrap gap-4"
             >
               <Link 
-                to="/users" 
+                to="/discovery" 
                 className="group relative px-8 py-4 bg-textprimary text-background font-bold text-sm uppercase tracking-wider overflow-hidden hover:bg-primary transition-colors duration-300"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  {'{ Initiate Search }'} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  {'{ Explore Now }'} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
               <Link 
-                to="/skills" 
+                to="/matches" 
                 className="group px-8 py-4 border border-textprimary text-textprimary font-bold text-sm uppercase tracking-wider hover:bg-textprimary/5 transition-colors duration-300"
               >
                 <span className="flex items-center gap-2">
-                  Explore Database
+                  AI Matches
                 </span>
               </Link>
             </motion.div>

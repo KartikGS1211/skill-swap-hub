@@ -22,37 +22,13 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/users" className="font-paragraph text-sm text-secondary-foreground/80 hover:text-primary transition-colors">
-                  Browse Users
-                </Link>
-              </li>
-              <li>
-                <Link to="/skills" className="font-paragraph text-sm text-secondary-foreground/80 hover:text-primary transition-colors">
-                  Explore Skills
+                <Link to="/discovery" className="font-paragraph text-sm text-secondary-foreground/80 hover:text-primary transition-colors">
+                  Discover Skills
                 </Link>
               </li>
               <li>
                 <Link to="/matches" className="font-paragraph text-sm text-secondary-foreground/80 hover:text-primary transition-colors">
                   AI Matches
-                </Link>
-              </li>
-              <li>
-                <Link to="/locations" className="font-paragraph text-sm text-secondary-foreground/80 hover:text-primary transition-colors">
-                  Locations
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h4 className="font-paragraph text-sm font-semibold mb-4 text-primary">
-              {'{ Resources }'}
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/contact" className="font-paragraph text-sm text-secondary-foreground/80 hover:text-primary transition-colors">
-                  Contact Us
                 </Link>
               </li>
               <li>
@@ -63,19 +39,38 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Connect */}
+          {/* Community */}
           <div>
             <h4 className="font-paragraph text-sm font-semibold mb-4 text-primary">
-              {'{ Connect }'}
+              {'{ Community }'}
+            </h4>
+            <ul className="space-y-2">
+              <li>
+                <a href="#" className="font-paragraph text-sm text-secondary-foreground/80 hover:text-primary transition-colors">
+                  Guidelines
+                </a>
+              </li>
+              <li>
+                <a href="#" className="font-paragraph text-sm text-secondary-foreground/80 hover:text-primary transition-colors">
+                  FAQ
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Get Started */}
+          <div>
+            <h4 className="font-paragraph text-sm font-semibold mb-4 text-primary">
+              {'{ Get Started }'}
             </h4>
             <p className="font-paragraph text-sm text-secondary-foreground/80 mb-4">
               Join our community and start exchanging skills today.
             </p>
             <Link
-              to="/contact"
+              to="/discovery"
               className="inline-block font-paragraph text-sm px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
             >
-              {'{ Get Started →}'}
+              {'{ Explore →}'}
             </Link>
           </div>
         </div>

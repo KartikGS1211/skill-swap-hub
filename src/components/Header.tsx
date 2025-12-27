@@ -17,11 +17,8 @@ export default function Header() {
 
   const navLinks = [
     { path: '/', label: 'Home' },
-    { path: '/users', label: 'Users' },
-    { path: '/skills', label: 'Skills' },
+    { path: '/discovery', label: 'Discover' },
     { path: '/matches', label: 'AI Matches' },
-    { path: '/locations', label: 'Locations' },
-    { path: '/contact', label: 'Contact' },
   ];
 
   return (
