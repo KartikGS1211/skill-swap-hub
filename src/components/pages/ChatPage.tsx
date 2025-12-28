@@ -108,6 +108,39 @@ export default function ChatPage() {
     };
 
     loadChat();
+
+    // Set up polling to fetch new messages every 2 seconds
+    const pollInterval = setInterval(async () => {
+      if (!id || !member?._id) return;
+
+      try {
+        const { items: allMessages } = await BaseCrudService.getAll<ChatMessages>(
+          'chatmessages'
+        );
+        const conversationMessages = allMessages
+          .filter((msg) => msg.threadId === id)
+          .sort(
+            (a, b) =>
+              new Date(a.createdAt || 0).getTime() -
+              new Date(b.createdAt || 0).getTime()
+          );
+
+        setMessages(conversationMessages);
+
+        // Also refresh contact requests
+        const { items: allRequests } = await BaseCrudService.getAll<
+          ContactExchangeRequests
+        >('contactexchangerequests');
+        const conversationRequests = allRequests.filter(
+          (req) => req.conversationId === id
+        );
+        setContactRequests(conversationRequests);
+      } catch (error) {
+        console.error('Error polling messages:', error);
+      }
+    }, 2000);
+
+    return () => clearInterval(pollInterval);
   }, [id, member?._id, navigate]);
 
   const handleSendMessage = async () => {
