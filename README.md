@@ -1,3 +1,5 @@
+Skill Swap AI – Skill for Skill, Not Money
+
 ## 🚀 Features
 
 - **Astro Framework** - Modern static site generator with server-side rendering
