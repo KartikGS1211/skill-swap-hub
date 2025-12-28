@@ -35,6 +35,81 @@ export interface AISkillMatches {
 
 
 /**
+ * Collection ID: chatconversations
+ * Interface for ChatConversations
+ */
+export interface ChatConversations {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  participantOneId?: string;
+  /** @wixFieldType text */
+  participantTwoId?: string;
+  /** @wixFieldType text */
+  matchId?: string;
+  /** @wixFieldType text */
+  status?: string;
+  /** @wixFieldType datetime */
+  createdAt?: Date | string;
+  /** @wixFieldType datetime */
+  lastMessageAt?: Date | string;
+  /** @wixFieldType boolean */
+  participantOneContactShared?: boolean;
+  /** @wixFieldType boolean */
+  participantTwoContactShared?: boolean;
+}
+
+
+/**
+ * Collection ID: chatmessages
+ * Interface for ChatMessages
+ */
+export interface ChatMessages {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  threadId?: string;
+  /** @wixFieldType text */
+  authorId?: string;
+  /** @wixFieldType text */
+  content?: string;
+  /** @wixFieldType text */
+  messageType?: string;
+  /** @wixFieldType boolean */
+  isRead?: boolean;
+  /** @wixFieldType datetime */
+  createdAt?: Date | string;
+}
+
+
+/**
+ * Collection ID: contactexchangerequests
+ * Interface for ContactExchangeRequests
+ */
+export interface ContactExchangeRequests {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  conversationId?: string;
+  /** @wixFieldType text */
+  requesterId?: string;
+  /** @wixFieldType text */
+  recipientId?: string;
+  /** @wixFieldType text */
+  contactTypeRequested?: string;
+  /** @wixFieldType text */
+  status?: string;
+  /** @wixFieldType datetime */
+  createdAt?: Date | string;
+  /** @wixFieldType datetime */
+  respondedAt?: Date | string;
+}
+
+
+/**
  * Collection ID: contactsubmissions
  * Interface for ContactSubmissions
  */
@@ -156,4 +231,79 @@ export interface UserProfiles {
   requestedSkillsSummary?: string;
   /** @wixFieldType boolean */
   isAvailable?: boolean;
+}
+
+
+/**
+ * Collection ID: chatconversations
+ * Interface for ChatConversations
+ */
+export interface ChatConversations {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  participantOneId?: string;
+  /** @wixFieldType text */
+  participantTwoId?: string;
+  /** @wixFieldType text */
+  matchId?: string;
+  /** @wixFieldType text */
+  status?: string;
+  /** @wixFieldType datetime */
+  createdAt?: Date | string;
+  /** @wixFieldType datetime */
+  lastMessageAt?: Date | string;
+  /** @wixFieldType boolean */
+  participantOneContactShared?: boolean;
+  /** @wixFieldType boolean */
+  participantTwoContactShared?: boolean;
+}
+
+
+/**
+ * Collection ID: chatmessages
+ * Interface for ChatMessages
+ */
+export interface ChatMessages {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  threadId?: string;
+  /** @wixFieldType text */
+  authorId?: string;
+  /** @wixFieldType text */
+  content?: string;
+  /** @wixFieldType text */
+  messageType?: string;
+  /** @wixFieldType boolean */
+  isRead?: boolean;
+  /** @wixFieldType datetime */
+  createdAt?: Date | string;
+}
+
+
+/**
+ * Collection ID: contactexchangerequests
+ * Interface for ContactExchangeRequests
+ */
+export interface ContactExchangeRequests {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  conversationId?: string;
+  /** @wixFieldType text */
+  requesterId?: string;
+  /** @wixFieldType text */
+  recipientId?: string;
+  /** @wixFieldType text */
+  contactTypeRequested?: string;
+  /** @wixFieldType text */
+  status?: string;
+  /** @wixFieldType datetime */
+  createdAt?: Date | string;
+  /** @wixFieldType datetime */
+  respondedAt?: Date | string;
 }

@@ -1,27 +1,48 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useMember } from '@/integrations';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { BaseCrudService } from '@/integrations';
-import { AISkillMatches } from '@/entities';
+import { AISkillMatches, ChatConversations } from '@/entities';
 import { Image } from '@/components/ui/image';
-import { ArrowLeft, Sparkles, TrendingUp, Calendar } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Sparkles, TrendingUp, Calendar, MessageCircle } from 'lucide-react';
 
 export default function MatchDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const { member } = useMember();
+  const navigate = useNavigate();
   const [match, setMatch] = useState<AISkillMatches | null>(null);
   const [loading, setLoading] = useState(true);
+  const [connecting, setConnecting] = useState(false);
+  const [existingConversation, setExistingConversation] = useState<ChatConversations | null>(null);
 
   useEffect(() => {
     const fetchMatch = async () => {
       if (!id) return;
       const matchData = await BaseCrudService.getById<AISkillMatches>('aiskillmatches', id);
       setMatch(matchData);
+
+      // Check if conversation already exists
+      if (member?._id) {
+        const { items } = await BaseCrudService.getAll<ChatConversations>('chatconversations');
+        const existing = items.find(
+          (conv) =>
+            conv.matchId === id &&
+            ((conv.participantOneId === member._id && conv.participantTwoId === matchData?.userTwoDisplayName) ||
+              (conv.participantTwoId === member._id && conv.participantOneId === matchData?.userOneDisplayName))
+        );
+        if (existing) {
+          setExistingConversation(existing);
+        }
+      }
+
       setLoading(false);
     };
     fetchMatch();
-  }, [id]);
+  }, [id, member?._id]);
 
   if (loading) {
     return (
@@ -229,12 +250,51 @@ export default function MatchDetailPage() {
                 This AI-generated match suggests a strong potential for mutual benefit. Reach out to explore this skill exchange opportunity.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center justify-center gap-2 font-paragraph text-sm px-6 py-3 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-                >
-                  {'{ Contact Users →}'}
-                </Link>
+                {existingConversation ? (
+                  <Button
+                    onClick={() => navigate(`/chat/${existingConversation._id}`)}
+                    className="inline-flex items-center justify-center gap-2 font-paragraph text-sm px-6 py-3 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                  >
+                    <MessageCircle size={16} />
+                    {'{ Continue Chat →}'}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={async () => {
+                      if (!member?._id) {
+                        navigate('/profile');
+                        return;
+                      }
+                      setConnecting(true);
+                      try {
+                        // Create new conversation
+                        const conversation: ChatConversations = {
+                          _id: crypto.randomUUID(),
+                          participantOneId: member._id,
+                          participantTwoId: match?.userTwoDisplayName || '',
+                          matchId: id,
+                          status: 'active',
+                          createdAt: new Date(),
+                          lastMessageAt: new Date(),
+                          participantOneContactShared: false,
+                          participantTwoContactShared: false,
+                        };
+
+                        await BaseCrudService.create('chatconversations', conversation);
+                        navigate(`/chat/${conversation._id}`);
+                      } catch (error) {
+                        console.error('Error creating conversation:', error);
+                      } finally {
+                        setConnecting(false);
+                      }
+                    }}
+                    disabled={connecting}
+                    className="inline-flex items-center justify-center gap-2 font-paragraph text-sm px-6 py-3 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                  >
+                    <MessageCircle size={16} />
+                    {connecting ? 'Connecting...' : '{ Connect & Chat →}'}
+                  </Button>
+                )}
                 <Link
                   to="/matches"
                   className="inline-flex items-center justify-center gap-2 font-paragraph text-sm px-6 py-3 border border-secondary-foreground text-secondary-foreground hover:bg-secondary-foreground hover:text-secondary transition-colors"

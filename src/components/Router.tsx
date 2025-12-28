@@ -15,6 +15,8 @@ import SkillDetailPage from '@/components/pages/SkillDetailPage';
 import MatchesPage from '@/components/pages/MatchesPage';
 import MatchDetailPage from '@/components/pages/MatchDetailPage';
 import ProfilePage from '@/components/pages/ProfilePage';
+import ChatsListPage from '@/components/pages/ChatsListPage';
+import ChatPage from '@/components/pages/ChatPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -73,6 +75,22 @@ const router = createBrowserRouter([
         element: (
           <MemberProtectedRoute messageToSignIn="Sign in to view your profile">
             <ProfilePage />
+          </MemberProtectedRoute>
+        ),
+      },
+      {
+        path: "chats",
+        element: (
+          <MemberProtectedRoute messageToSignIn="Sign in to view your messages">
+            <ChatsListPage />
+          </MemberProtectedRoute>
+        ),
+      },
+      {
+        path: "chat/:id",
+        element: (
+          <MemberProtectedRoute messageToSignIn="Sign in to view this conversation">
+            <ChatPage />
           </MemberProtectedRoute>
         ),
       },
